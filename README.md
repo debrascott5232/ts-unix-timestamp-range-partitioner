@@ -42,3 +42,10 @@ systems and keeps bucket boundaries stable across different queries.
   with `end` equal to the range end.
 - `start` must be strictly less than `end`, and `bucketSize` must be a positive
   integer.  Violations throw `RangeError` or `TypeError` respectively.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
